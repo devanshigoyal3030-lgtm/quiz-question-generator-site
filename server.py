@@ -150,8 +150,12 @@ Here is the material:
             super().do_POST()
 
 if __name__ == '__main__':
-    port = 8000
-    server_address = ('', port)
-    httpd = HTTPServer(server_address, RequestHandler)
-    print(f"Starting API + Static server on port {port}...")
-    httpd.serve_forever()
+    import os
+
+port = int(os.environ.get("PORT", 10000))
+server_address = ('', port)
+httpd = HTTPServer(server_address, RequestHandler)
+
+print(f"Starting API + Static server on port {port}...")
+httpd.serve_forever()
+
