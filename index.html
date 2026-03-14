@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Quiz Generator</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body>
+    <div class="app-container">
+        <header class="header glassmorphism">
+            <div class="logo">
+                <i data-lucide="brain-circuit"></i>
+                <h1>AI Quiz Generator</h1>
+            </div>
+            <p>Generate MCQs and True/False questions instantly from text or PDF.</p>
+        </header>
+
+        <main class="main-content">
+            <div class="generator-panel glassmorphism">
+                <div class="tabs">
+                    <button class="tab-btn active" data-tab="text">Text Input</button>
+                    <button class="tab-btn" data-tab="file">File Upload (PDF/Image)</button>
+                </div>
+
+                <div class="tab-content active" id="text-tab">
+                    <textarea id="textContent" placeholder="Paste your text material here..."></textarea>
+                </div>
+
+                <div class="tab-content" id="file-tab">
+                    <div class="file-drop-area" id="dropArea">
+                        <i data-lucide="upload-cloud"></i>
+                        <p>Drag & Drop your PDF or Image here</p>
+                        <span>or</span>
+                        <input type="file" id="fileInput" accept=".pdf,image/*" hidden>
+                        <button class="btn btn-secondary" onclick="document.getElementById('fileInput').click()">Browse Files</button>
+                        <p id="fileName" class="file-name"></p>
+                    </div>
+                </div>
+
+                <div class="action-bar">
+                    <div class="form-group inline">
+                        <label for="questionCount">Questions:</label>
+                        <input type="number" id="questionCount" min="1" max="20" value="5">
+                    </div>
+                    <button class="btn btn-primary" id="generateBtn">
+                        <i data-lucide="zap"></i> Generate Quiz
+                    </button>
+                </div>
+            </div>
+
+            <!-- Loading State -->
+            <div class="loading-state hidden" id="loadingState">
+                <div class="spinner"></div>
+                <p>Analyzing material and generating questions...</p>
+                <p class="loading-subtext">This might take a few seconds.</p>
+            </div>
+
+            <!-- Results Output -->
+            <div class="results-panel glassmorphism hidden" id="resultsPanel">
+                <div class="results-header">
+                    <h2><i data-lucide="check-circle"></i> Review Questions</h2>
+                    <div class="results-actions">
+                        <button class="btn btn-secondary" id="exportTxtBtn"><i data-lucide="file-text"></i> Export TXT</button>
+                        <button class="btn btn-secondary" id="exportJsonBtn"><i data-lucide="file-json"></i> Export JSON</button>
+                    </div>
+                </div>
+                
+                <div id="questionsContainer" class="questions-container">
+                    <!-- Questions will be injected here -->
+                </div>
+            </div>
+        </main>
+        
+        <footer class="footer">
+            <p>Powered by Google Gemini API</p>
+        </footer>
+    </div>
+
+    <!-- PDF.js for client side PDF parsing -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script>
+        // Set worker source for PDF.js
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    </script>
+    <script src="app.js"></script>
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
